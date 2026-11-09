@@ -77,6 +77,10 @@ hrflow-python-vue3/
 │   └── index.html
 ├── docs/
 │   ├── images/
+│   │   ├── hrflow.png
+│   │   ├── dashboard.png
+│   │   ├── add-employee.png
+│   │   └── hrflow-api.png
 │   ├── architecture.md
 │   └── deployment.md
 ├── docker-compose.yml
