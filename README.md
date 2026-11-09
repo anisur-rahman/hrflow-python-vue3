@@ -60,6 +60,10 @@ hrflow-python-vue3/
 ## Quick start
 
 ```bash
+# 1. Start Docker Desktop
+open -a Docker
+
+# 2. Start the app
 cp .env.example .env
 docker compose up --build
 ```
@@ -68,6 +72,8 @@ docker compose up --build
 - FastAPI Swagger UI → http://localhost:8000/docs
 
 Create a department in Swagger before adding employees in the UI.
+
+If the frontend doesn't load, run `docker compose ps` in a second terminal to check all services are up.
 
 ## Local dev (no Docker)
 
