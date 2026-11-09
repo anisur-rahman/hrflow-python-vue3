@@ -6,6 +6,16 @@ An HR management app built with **FastAPI**, **PostgreSQL**, and **Vue 3**.
 
 ![Add employee](docs/images/add-employee.png)
 
+## Features
+
+- Department and employee management via REST API
+- Add employees through the Vue 3 UI with form validation
+- Employee directory with status tracking
+- Headcount report by department
+- Paginated employee list endpoint
+- Swagger UI for exploring the API
+- GitHub Actions CI running pytest on every push
+
 ## Stack
 
 | Area     | Tools                                               |
