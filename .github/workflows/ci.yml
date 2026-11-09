@@ -11,4 +11,4 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r backend/requirements-dev.txt
-      - run: cd backend && pytest -q
+      - run: cd backend && python -m pytest -q
