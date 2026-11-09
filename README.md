@@ -6,6 +6,8 @@ An HR management app built with **FastAPI**, **PostgreSQL**, and **Vue 3**.
 
 ![Add employee](docs/images/add-employee.png)
 
+![HRFlow](docs/images/hr-flow.png)
+
 ## Features
 
 - Department and employee management via REST API
