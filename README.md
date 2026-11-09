@@ -1,5 +1,7 @@
 # HRFlow
 
+![Backend CI](https://github.com/anisur-rahman/hrflow-python-vue3/actions/workflows/ci.yml/badge.svg)
+
 An HR management app built with **FastAPI**, **PostgreSQL**, and **Vue 3**.
 
 ![HRFlow architecture overview](docs/images/hrflow.png)
