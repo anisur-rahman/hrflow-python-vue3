@@ -25,6 +25,38 @@ An HR management app built with **FastAPI**, **PostgreSQL**, and **Vue 3**.
 | Database | PostgreSQL 16 (SQLite for local dev without Docker) |
 | Infra    | Docker Compose, GitHub Actions CI                   |
 
+## Project structure
+
+```
+hrflow-python-vue3/
+├── backend/
+│   ├── app/
+│   │   └── main.py          # FastAPI app, models, schemas, routes
+│   ├── tests/
+│   │   └── test_api.py
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   └── requirements-dev.txt
+├── frontend/
+│   ├── src/
+│   │   ├── pages/
+│   │   │   ├── Dashboard.vue
+│   │   │   └── Employees.vue
+│   │   ├── services/
+│   │   │   └── api.ts
+│   │   ├── App.vue
+│   │   ├── main.ts
+│   │   └── style.css
+│   ├── Dockerfile
+│   └── index.html
+├── docs/
+│   ├── images/
+│   ├── architecture.md
+│   └── deployment.md
+├── docker-compose.yml
+└── .github/workflows/ci.yml
+```
+
 ## Quick start
 
 ```bash
