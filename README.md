@@ -2,6 +2,10 @@
 
 An HR management app built with **FastAPI**, **PostgreSQL**, and **Vue 3**.
 
+![Dashboard](docs/images/dashboard.png)
+
+![Add employee](docs/images/add-employee.png)
+
 ## Stack
 
 | Area     | Tools                                               |
