@@ -27,11 +27,6 @@ An HR management app built with **FastAPI**, **PostgreSQL**, and **Vue 3**.
 3. FastAPI validates the request using **Pydantic schemas**, then queries or writes to **PostgreSQL** via SQLAlchemy
 4. The response is serialised back to JSON and returned to the frontend
 
-For example, when you add an employee in the UI:
-- Vue POSTs to `/api/v1/employees`
-- FastAPI checks the department exists, checks the email isn't a duplicate, then inserts the row
-- The new employee record is returned and the employee list refreshes automatically
-
 ### One complete example — adding John Smith
 
 | Step | Layer | What happens |
