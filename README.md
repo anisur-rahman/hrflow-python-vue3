@@ -2,11 +2,11 @@
 
 An HR management app built with **FastAPI**, **PostgreSQL**, and **Vue 3**.
 
+![HRFlow](docs/images/hrflow.png)
+
 ![Dashboard](docs/images/dashboard.png)
 
 ![Add employee](docs/images/add-employee.png)
-
-![HRFlow](docs/images/hrflow.png)
 
 ![HRFlow API](docs/images/hrflow-api.png)
 
@@ -19,6 +19,18 @@ An HR management app built with **FastAPI**, **PostgreSQL**, and **Vue 3**.
 - Paginated employee list endpoint
 - Swagger UI for exploring the API
 - GitHub Actions CI running pytest on every push
+
+## How data flows
+
+1. The **Vue 3 frontend** sends HTTP requests to `/api/v1/*` via Axios
+2. Vite proxies those requests to the **FastAPI backend** on port 8000
+3. FastAPI validates the request using **Pydantic schemas**, then queries or writes to **PostgreSQL** via SQLAlchemy
+4. The response is serialised back to JSON and returned to the frontend
+
+For example, when you add an employee in the UI:
+- Vue POSTs to `/api/v1/employees`
+- FastAPI checks the department exists, checks the email isn't a duplicate, then inserts the row
+- The new employee record is returned and the employee list refreshes automatically
 
 ## Stack
 
@@ -125,24 +137,6 @@ To stop the app:
 ```bash
 docker compose down
 ```
-
-## Quick start
-
-```bash
-# 1. Start Docker Desktop
-open -a Docker
-
-# 2. Start the app
-cp .env.example .env
-docker compose up --build
-```
-
-- Vue 3 dashboard → http://localhost:5173
-- FastAPI Swagger UI → http://localhost:8000/docs
-
-Create a department in Swagger before adding employees in the UI.
-
-If the frontend doesn't load, run `docker compose ps` in a second terminal to check all services are up.
 
 ## Local dev (no Docker)
 
