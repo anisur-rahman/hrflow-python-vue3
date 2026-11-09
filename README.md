@@ -2,7 +2,7 @@
 
 An HR management app built with **FastAPI**, **PostgreSQL**, and **Vue 3**.
 
-![HRFlow](docs/images/hrflow.png)
+![HRFlow architecture overview](docs/images/hrflow.png)
 
 ![Dashboard](docs/images/dashboard.png)
 
