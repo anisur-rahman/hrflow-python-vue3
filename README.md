@@ -197,6 +197,80 @@ curl http://localhost:8000/api/v1/reports/headcount
 - Docker Compose waits for the PostgreSQL healthcheck before starting the API, preventing startup race conditions
 - Pydantic v2 handles all request validation — duplicate emails and missing departments return proper 409/404 errors
 
+## Cloud deployment (AWS)
+
+### Services
+
+| AWS Service | Purpose |
+|-------------|---------|
+| ECR | Store Docker images for backend and frontend |
+| ECS Fargate | Run containers without managing servers |
+| RDS (PostgreSQL) | Managed production database |
+| ALB | Load balancer, routes HTTP traffic to ECS |
+| Secrets Manager | Store `DATABASE_URL` and passwords securely |
+| CloudWatch | Logs and monitoring |
+
+### Step 1 — Push images to ECR
+
+```bash
+aws ecr get-login-password --region us-east-1 | \
+  docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
+
+docker build -t hrflow-api ./backend
+docker tag hrflow-api:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/hrflow-api:latest
+docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/hrflow-api:latest
+
+docker build -t hrflow-frontend ./frontend
+docker tag hrflow-frontend:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/hrflow-frontend:latest
+docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/hrflow-frontend:latest
+```
+
+### Step 2 — Set up RDS
+
+- Create a PostgreSQL 16 instance in a private subnet
+- Store the connection string in Secrets Manager:
+  ```
+  postgresql+psycopg://hrflow:<password>@hrflow.xxxx.us-east-1.rds.amazonaws.com:5432/hrflow
+  ```
+
+### Step 3 — Create ECS Fargate cluster
+
+1. Create a cluster in ECS
+2. Create two task definitions — one for the API, one for the frontend
+3. Set `DATABASE_URL` from Secrets Manager in the API task
+4. Assign the ECR image URLs to each task
+
+### Step 4 — Create an ALB
+
+- Add two target groups:
+  - `/api/*` → API service on port 8000
+  - `/*` → frontend service on port 5173
+- Attach an HTTPS certificate via ACM if you have a domain
+
+### Step 5 — Run ECS services
+
+- Create two ECS services in the cluster, one per task definition
+- Attach both to the ALB target groups
+
+### Step 6 — CloudWatch logging
+
+- Enable `awslogs` log driver in each task definition
+- Logs appear in CloudWatch under `/ecs/hrflow-api` and `/ecs/hrflow-frontend`
+
+### Step 7 — Automate with GitHub Actions (CD)
+
+```yaml
+- name: Deploy to ECS
+  uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+  with:
+    task-definition: task-definition.json
+    service: hrflow-api
+    cluster: hrflow-cluster
+    wait-for-service-stability: true
+```
+
+> Before going live: add authentication, run Alembic migrations instead of `create_all`, and restrict RDS security groups so the database is only reachable from ECS.
+
 ## License
 
 MIT
