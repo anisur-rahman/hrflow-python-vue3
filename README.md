@@ -61,6 +61,71 @@ hrflow-python-vue3/
 └── .github/workflows/ci.yml
 ```
 
+## Getting started
+
+### Prerequisites
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
+- Git installed
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/anisur-rahman/hrflow-python-vue3.git
+cd hrflow-python-vue3
+```
+
+### 2. Set up environment
+
+```bash
+cp .env.example .env
+```
+
+### 3. Start Docker Desktop
+
+```bash
+open -a Docker
+```
+
+Wait until Docker Desktop shows the engine is running.
+
+### 4. Build and run
+
+```bash
+docker compose up --build
+```
+
+This starts three containers: PostgreSQL, the FastAPI backend, and the Vue 3 frontend.
+
+### 5. Open the app
+
+| Service | URL |
+|---------|-----|
+| Vue 3 frontend | http://localhost:5173 |
+| FastAPI Swagger UI | http://localhost:8000/docs |
+
+Create a department in Swagger first, then add employees through the UI.
+
+### Troubleshooting
+
+If the frontend doesn't load, open a second terminal and run:
+
+```bash
+docker compose ps
+```
+
+All three services (`db`, `api`, `frontend`) should show as `Up`. If one is missing, check the logs:
+
+```bash
+docker compose logs --tail=50
+```
+
+To stop the app:
+
+```bash
+docker compose down
+```
+
 ## Quick start
 
 ```bash
