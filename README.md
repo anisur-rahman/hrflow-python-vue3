@@ -190,6 +190,13 @@ curl -X POST http://localhost:8000/api/v1/employees \
 curl http://localhost:8000/api/v1/reports/headcount
 ```
 
+## Design decisions
+
+- SQLite is used automatically for local dev without Docker — no database setup needed
+- The Vite dev server proxies all `/api/v1` requests to FastAPI, so the frontend never hardcodes a port
+- Docker Compose waits for the PostgreSQL healthcheck before starting the API, preventing startup race conditions
+- Pydantic v2 handles all request validation — duplicate emails and missing departments return proper 409/404 errors
+
 ## License
 
 MIT
