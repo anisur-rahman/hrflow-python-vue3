@@ -32,6 +32,21 @@ For example, when you add an employee in the UI:
 - FastAPI checks the department exists, checks the email isn't a duplicate, then inserts the row
 - The new employee record is returned and the employee list refreshes automatically
 
+### One complete example — adding John Smith
+
+| Step | Layer | What happens |
+|------|-------|--------------|
+| 1 | Vue 3 | Renders the Add Employee form |
+| 2 | TypeScript | Validates field types before submitting |
+| 3 | Axios | POSTs employee data to `/api/v1/employees` |
+| 4 | FastAPI | Validates the request with Pydantic, checks the department exists and email isn't a duplicate |
+| 5 | SQLAlchemy | Inserts the employee record into PostgreSQL inside a transaction |
+| 6 | FastAPI | Returns the new employee as JSON |
+| 7 | Vue 3 | Refreshes the employee list automatically |
+| 8 | pytest | Verifies the full create/duplicate/headcount flow in CI |
+| 9 | Docker | Packages all three services together |
+| 10 | GitHub Actions | Runs pytest on every push |
+
 ## Stack
 
 | Area     | Tools                                               |
